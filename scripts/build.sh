@@ -53,6 +53,11 @@ if [[ "${TARGET_PLATFORM}" != win-* ]]; then
     EXTRA_CONSTRUCTOR_ARGS="${EXTRA_CONSTRUCTOR_ARGS} --conda-exe ${MICROMAMBA_FILE} --platform ${TARGET_PLATFORM}"
 fi
 
+echo "***** Set some variables for the solver *****"
+if [[ "${TARGET_PLATFORM}" == osx-64 ]]; then
+    export CONDA_OVERRIDE_OSX=10.9
+fi
+
 echo "***** Construct the installer *****"
 # shellcheck disable=SC2086
 constructor "${TEMP_DIR}/Miniforge3/" --output-dir "${TEMP_DIR}" ${EXTRA_CONSTRUCTOR_ARGS}
