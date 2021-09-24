@@ -12,9 +12,9 @@ channels:
   - conda-forge
 
 write_condarc: True
-# keep pkgs for space-saving implications for hardlinks when create new environments
-# and keep the same with Miniconda
-keep_pkgs: True
+# usually we keep pkgs for space-saving implications for hardlinks when create new environments
+# but sage is a beast and space saving in sage itself is more important
+keep_pkgs: False
 license_file: ../LICENSE
 
 specs:
