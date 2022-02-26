@@ -22,7 +22,7 @@ fi
 if [[ "${TARGET_PLATFORM}" == win-* ]]; then
     conda install -y "nsis=3.01" -c conda-forge --override-channels
 fi
-pip install git+git://github.com/wolfv/constructor@69eaa20b12ea1020438f645ec834f47ac9d3c3a7#egg=constructor --force --no-deps
+pip install git+git://github.com/chrisburr/constructor@64ebd6d34f0f18684c76c0bebcfab41c38d55083#egg=constructor --force --no-deps
 conda list
 
 echo "***** Make temp directory *****"
@@ -39,7 +39,7 @@ cp LICENSE "${TEMP_DIR}/"
 ls -al "${TEMP_DIR}"
 
 if [[ "${TARGET_PLATFORM}" != win-* ]]; then
-    MICROMAMBA_VERSION=0.13.0
+    MICROMAMBA_VERSION=0.21.2
     mkdir "${TEMP_DIR}/micromamba"
     pushd "${TEMP_DIR}/micromamba"
     curl -L -O "https://anaconda.org/conda-forge/micromamba/${MICROMAMBA_VERSION}/download/${TARGET_PLATFORM}/micromamba-${MICROMAMBA_VERSION}-0.tar.bz2"
@@ -59,8 +59,11 @@ if [[ "${TARGET_PLATFORM}" == osx-64 ]]; then
 fi
 
 echo "***** Construct the installer *****"
+# Transmutation requires the current directory is writable
+cd "${TEMP_DIR}"
 # shellcheck disable=SC2086
 constructor "${TEMP_DIR}/Miniforge3/" --output-dir "${TEMP_DIR}" ${EXTRA_CONSTRUCTOR_ARGS}
+cd -
 
 echo "***** Generate installer hash *****"
 cd "${TEMP_DIR}"

@@ -82,13 +82,45 @@ Latest installers with Mamba and PyPy 3.7 in the base environment:
 Download the installer using curl or wget or your favorite program download files and run the script.
 For eg:
 
-    curl -L -O https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh
+    curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
     bash Mambaforge-$(uname)-$(uname -m).sh
 
 or
 
-    wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh
+    wget "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
     bash Mambaforge-$(uname)-$(uname -m).sh
+
+#### Uninstallation
+
+Uninstalling Miniforge means removing the files that were created during the installation process.
+You will typically want to remove:
+
+1. Any modifications to your shell rc files that were made by Miniforge:
+
+```bash
+# Use this first command to see what rc files will be updated
+conda init --reverse --dry-run
+# Use this next command to take action on the rc files listed above
+conda init --reverse
+```
+
+2. Remove the folder and all subfolders where the base environment for Miniforge was installed:
+
+```bash
+CONDA_BASE_ENVIRONMENT=$(conda info --base)
+echo The next command will delete all files in ${CONDA_BASE_ENVIRONMENT}
+# Warning, the rm command below is irreversible!
+# check the output of the echo command above
+# To make sure you are deleting the correct directory
+rm -rf ${CONDA_BASE_ENVIRONMENT}
+```
+
+3. Any global conda configuration files that are left behind.
+
+```bash
+echo ${HOME}/.condarc will be removed if it exists
+rm -f "${HOME}/.condarc"
+```
 
 ### Windows
 
@@ -111,11 +143,11 @@ more automated fashion, you may wish to a command similar to
 
 For Linux, any architecture, use the following command
 
-    wget -O Miniforge3.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh
+    wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 
 For MacOSX, any architecture, use the following command
 
-    curl -fsSLo Miniforge3.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-$(uname -m).sh
+    curl -fsSLo Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-$(uname -m).sh"
 
 This will download the appropriate installer for the present architecture with
 the filename ``Miniforge3.sh``. Run the shell script with the command in batch
@@ -148,9 +180,9 @@ After construction on the CI, the installer is tested against a range of distrib
 - Ubuntu 16.04 ([LTS](https://ubuntu.com/about/release-cycle))
 - Ubuntu 18.04 ([LTS](https://ubuntu.com/about/release-cycle))
 - Ubuntu 20.04 ([LTS](https://ubuntu.com/about/release-cycle))
-- Ubuntu 21.04 (Latest non-LTS version)
+- Ubuntu 21.10 (Latest non-LTS version)
 
-## Usage
+## Local usage
 
 Installers are built and uploaded via the CI but if you want to construct your own Miniforge installer, here is how:
 

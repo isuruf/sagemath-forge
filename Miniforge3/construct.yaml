@@ -16,6 +16,8 @@ write_condarc: True
 # but sage is a beast and space saving in sage itself is more important
 keep_pkgs: False
 license_file: ../LICENSE
+# Blocked until https://github.com/mamba-org/mamba/issues/1497 is fixed
+# transmute_file_type: .conda
 
 specs:
   - python 3.8.*
